@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    // SvelteKit's `$lib/index.ts` is a comment-only placeholder by convention.
+    "unicorn/no-empty-file": "off"
+  },
+  "env": {
+    "builtin": true
+  }
+}
