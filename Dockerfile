@@ -3,13 +3,11 @@
 # ---------- Build stage ----------
 # Debian "slim" (glibc) is used for the build so the native toolchain deps
 # (@tailwindcss/oxide, esbuild) resolve their prebuilt binaries reliably.
-FROM node:22-bookworm-slim AS build
+FROM node:26-bookworm-slim AS build
 
-# Enable pnpm via Corepack, pinned to the version this project uses.
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable && corepack prepare pnpm@11.5.2 --activate
+# Corepack is no longer bundled with current Node, so install pnpm with the
+# npm that ships with the image, pinned to the version this project uses.
+RUN npm install -g pnpm@11.5.2
 
 WORKDIR /app
 
@@ -25,7 +23,7 @@ RUN pnpm build
 # ---------- Runtime stage ----------
 # adapter-node emits a self-contained bundle, so the runtime image needs only
 # Node, the build output, and package.json — no node_modules.
-FROM node:22-alpine AS runtime
+FROM node:26-alpine AS runtime
 WORKDIR /app
 
 ENV NODE_ENV=production
