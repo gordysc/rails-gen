@@ -1,0 +1,25 @@
+# Dependencies and build artifacts (regenerated inside the image)
+node_modules
+.svelte-kit
+build
+
+# Version control and editor
+.git
+.gitignore
+.vscode
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Docs / assets not needed to build or run the app
+README.md
+images
+
+# OS / logs / local env
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+!.env.example
